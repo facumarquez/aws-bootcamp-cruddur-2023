@@ -31,3 +31,11 @@ To probe that I configure AWS CLI, I´m explaining the steps I followed and also
 ### Created Budget
 
 ![](img/w0-aws-budget.png)
+
+## Additional tasks
+
+### Created a GitHub Action workflow
+
+I created a GitHub Actions workflow to scan for leaked secrets everytime I create a Pull request
+
+![](img/w0-gh-action.png)
