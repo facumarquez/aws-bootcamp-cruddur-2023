@@ -32,6 +32,12 @@ To probe that I configure AWS CLI, I´m explaining the steps I followed and also
 
 ![](img/w0-aws-budget.png)
 
+### Create Architecture Diagrams:
+
+* Conceptual -> https://lucid.app/lucidchart/0dba9028-5aad-40c6-99d2-865634ef6530/edit?invitationId=inv_63da47e9-674a-430f-8f68-603c47bf7d5b
+
+* Logical -> https://lucid.app/lucidchart/57213573-de94-419b-befc-705f77ddb5d3/edit?invitationId=inv_a1e30904-b007-4f64-bc68-49226f311856
+
 ## Additional tasks
 
 ### Created a GitHub Action workflow
