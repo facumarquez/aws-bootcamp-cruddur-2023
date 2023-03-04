@@ -38,7 +38,7 @@ console_handler = logging.StreamHandler()
 cw_handler = watchtower.CloudWatchLogHandler(log_group='cruddur')
 LOGGER.addHandler(console_handler)
 LOGGER.addHandler(cw_handler)
-LOGGER.INFO("HomeActivities")
+LOGGER.info("HomeActivities")
 
 # Honeycomb -----------------------------------------------------------------------------
 # Initialize tracing and an exporter that can send data to Honeycomb
