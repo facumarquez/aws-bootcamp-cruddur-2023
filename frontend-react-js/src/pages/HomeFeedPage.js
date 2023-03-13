@@ -1,7 +1,7 @@
 import './HomeFeedPage.css';
 import React from "react";
 
-import { Amplify } from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 
 import DesktopNavigation  from '../components/DesktopNavigation';
 import DesktopSidebar     from '../components/DesktopSidebar';
@@ -19,7 +19,6 @@ export default function HomeFeedPage() {
   const [replyActivity, setReplyActivity] = React.useState({});
   const [user, setUser] = React.useState(null);
   const dataFetchedRef = React.useRef(false);
-  const [user, setUser] = React.useState(null);
 
   const loadData = async () => {
     try {
@@ -56,7 +55,7 @@ export default function HomeFeedPage() {
     })
     .catch((err) => console.log(err));
   };
-
+  
   React.useEffect(()=>{
     //prevents double call
     if (dataFetchedRef.current) return;
