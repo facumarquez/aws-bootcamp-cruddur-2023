@@ -25,9 +25,9 @@ from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExport
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 
-# AWS x-ray -----------------------------------------------------------------------------
-from aws_xray_sdk.core import xray_recorder
-from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+# # AWS x-ray -----------------------------------------------------------------------------
+# from aws_xray_sdk.core import xray_recorder
+# from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
 # AWS Cloudwatch logs -----------------------------------------------------------------------------
 import watchtower
@@ -65,9 +65,9 @@ FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 
 # AWS x-ray -----------------------------------------------------------------------------
-xray_url = os.getenv("AWS_XRAY_URL")
-xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
-XRayMiddleware(app, xray_recorder)
+# xray_url = os.getenv("AWS_XRAY_URL")
+# xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+# XRayMiddleware(app, xray_recorder)
 
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
@@ -122,7 +122,7 @@ def data_create_message():
   return
 
 @app.route("/api/activities/home", methods=['GET'])
-@xray_recorder.capture('activities_home')
+#@xray_recorder.capture('activities_home')
 def data_home():
   access_token = extract_access_token(request.headers)
   try:
@@ -140,7 +140,7 @@ def data_home():
   return data, 200
 
 @app.route("/api/activities/notifications", methods=['GET'])
-@xray_recorder.capture('activities_users')
+#@xray_recorder.capture('activities_users')
 def data_notifications():
   data = NotificationsActivities.run()
   return data, 200
@@ -177,7 +177,7 @@ def data_activities():
   return
 
 @app.route("/api/activities/<string:activity_uuid>", methods=['GET'])
-@xray_recorder.capture('activities_show')
+#@xray_recorder.capture('activities_show')
 def data_show_activity(activity_uuid):
   data = ShowActivity.run(activity_uuid=activity_uuid)
   return data, 200
