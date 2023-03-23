@@ -63,6 +63,10 @@ The message is being posted correctly but it is assigning a wrong uuid in the da
 
 and this is how the data looks:
 
+![](img/week4-cruddr-issue.png)
+
+![](img/week4-cruddr-issue-2.png)
+
 
 
 
