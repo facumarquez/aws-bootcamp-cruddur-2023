@@ -6,4 +6,4 @@ LABEL="db-drop"
 printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
 NO_DB_CONNECTION_URL=$(sed 's/\/postgres//g' <<<"$CONNECTION_URL")
-psql $NO_DB_CONNECTION_URL -c "drop database postgres;"
+psql $NO_DB_CONNECTION_URL -c "drop database postgres IF EXISTS postgres
