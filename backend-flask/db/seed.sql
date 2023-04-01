@@ -4,6 +4,7 @@ VALUES
   ('Andrew Brown', 'andrewbrown', 'andrew@test.com' ,'MOCK'),
   ('Andrew Bayko', 'bayko', 'bayko@testemail.com' ,'MOCK'),
   ('Facundo Marquez', 'facumarquez', 'facumarquez@gmail.com' ,'22676402-82eb-46f2-b9d4-2488f6caf942');
+  ('Londo Mollari','lmollari@centari.com' ,'londo' ,'MOCK');
 
 INSERT INTO public.activities (user_uuid, message, expires_at)
 VALUES
