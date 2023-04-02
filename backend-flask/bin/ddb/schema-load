@@ -5,6 +5,7 @@ import sys
 
 attrs = {
   'endpoint_url': 'http://localhost:8000'
+  
 }
 
 if len(sys.argv) == 2:
