@@ -40,3 +40,6 @@
 
 ## Implement (Pattern E) Updating a Message Group using DynamoDB Streams
 
+![](img/week5-dynamodb-streams-2.png)
+
+![](img/week5-dynamodb-lambda-log-ok.png)
