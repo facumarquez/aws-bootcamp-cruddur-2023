@@ -1,6 +1,8 @@
 version: "3.8"
 services:
   backend-flask:
+    env_file:
+      - backend-flask.env
     environment:
       #AWS_ENDPOINT_URL: "http://dynamodb-local:8000"
       #CONNECTION_URL: "${PROD_CONNECTION_URL}"
@@ -22,18 +24,24 @@ services:
       - "4567:4567"
     volumes:
       - ./backend-flask:/backend-flask
+    networks:
+      - cruddur-net
   frontend-react-js:
+    env_file:
+      - frontend-react-js.env
     environment:
       REACT_APP_BACKEND_URL: "https://${CODESPACE_NAME}-4567.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
       REACT_APP_AWS_PROJECT_REGION: "${AWS_DEFAULT_REGION}"
       REACT_APP_AWS_COGNITO_REGION: "${AWS_DEFAULT_REGION}"
       REACT_APP_AWS_USER_POOLS_ID: "us-east-1_kzYWUUbZI"
-      REACT_APP_CLIENT_ID: "cls"
+      REACT_APP_CLIENT_ID: "17mnc75id3s1kd7tvvtufcu3qk"
     build: ./frontend-react-js
     ports:
       - "3000:3000"
     volumes:
       - ./frontend-react-js:/frontend-react-js
+    networks:
+      - cruddur-net
   dynamodb-local:
     # https://stackoverflow.com/questions/67533058/persist-local-dynamodb-data-in-volumes-lack-permission-unable-to-open-databa
     # We needed to add user:root to get this working.
@@ -56,6 +64,8 @@ services:
       - '5432:5432'
     volumes: 
       - db:/var/lib/postgresql/data
+    networks:
+      - cruddur-net
   xray-daemon:
     image: "amazon/aws-xray-daemon"
     environment:
@@ -66,13 +76,15 @@ services:
       - "xray -o -b xray-daemon:2000"
     ports:
       - 2000:2000/udp
+    networks:
+      - cruddur-net
 
 # the name flag is a hack to change the default prepend folder
 # name when outputting the image names
 networks: 
-  internal-network:
+  cruddur-net:
     driver: bridge
-    name: cruddur
+    name: cruddur-net
 
 volumes:
   db:
