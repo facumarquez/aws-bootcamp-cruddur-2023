@@ -1,43 +1,24 @@
-import './MessageGroupPage.css';
+import './HomeFeedPage.css';
 import React from "react";
-import { useParams } from 'react-router-dom';
 
-import DesktopNavigation  from '../components/DesktopNavigation';
-import MessageGroupFeed from '../components/MessageGroupFeed';
-import MessagesFeed from '../components/MessageFeed';
-import MessagesForm from '../components/MessageForm';
-import {checkAuth, getAccessToken} from '../lib/CheckAuth';
+import DesktopNavigation  from 'components/DesktopNavigation';
+import DesktopSidebar     from 'components/DesktopSidebar';
+import ActivityFeed from 'components/ActivityFeed';
+import ActivityForm from 'components/ActivityForm';
+import ReplyForm from 'components/ReplyForm';
+import {checkAuth, getAccessToken} from 'lib/CheckAuth';
 
-export default function MessageGroupPage() {
-  const [otherUser, setOtherUser] = React.useState([]);
-  const [messageGroups, setMessageGroups] = React.useState([]);
-  const [messages, setMessages] = React.useState([]);
-  const [popped, setPopped] = React.useState([]);
+export default function HomeFeedPage() {
+  const [activities, setActivities] = React.useState([]);
+  const [popped, setPopped] = React.useState(false);
+  const [poppedReply, setPoppedReply] = React.useState(false);
+  const [replyActivity, setReplyActivity] = React.useState({});
   const [user, setUser] = React.useState(null);
   const dataFetchedRef = React.useRef(false);
-  const params = useParams();
 
-  const loadUserShortData = async () => {
+  const loadData = async () => {
     try {
-      const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/users/@${params.handle}/short`
-      const res = await fetch(backend_url, {
-        method: "GET"
-      });
-      let resJson = await res.json();
-      if (res.status === 200) {
-        console.log('other user:',resJson)
-        setOtherUser(resJson)
-      } else {
-        console.log(res)
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };  
-
-  const loadMessageGroupsData = async () => {
-    try {
-      const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/message_groups`
+      const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/home`
       await getAccessToken()
       const access_token = localStorage.getItem("access_token")
       const res = await fetch(backend_url, {
@@ -48,34 +29,54 @@ export default function MessageGroupPage() {
       });
       let resJson = await res.json();
       if (res.status === 200) {
-        setMessageGroups(resJson)
+        setActivities(resJson)
       } else {
         console.log(res)
       }
     } catch (err) {
       console.log(err);
     }
-  };  
+  };
 
+
+  
   React.useEffect(()=>{
     //prevents double call
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
 
-    loadMessageGroupsData();
-    loadUserShortData();
+    loadData();
     checkAuth(setUser);
   }, [])
+
   return (
     <article>
       <DesktopNavigation user={user} active={'home'} setPopped={setPopped} />
-      <section className='message_groups'>
-        <MessageGroupFeed otherUser={otherUser} message_groups={messageGroups} />
-      </section>
-      <div className='content messages'>
-        <MessagesFeed messages={messages} />
-        <MessagesForm setMessages={setMessages} />
+      <div className='content'>
+        <ActivityForm  
+          popped={popped}
+          setPopped={setPopped} 
+          setActivities={setActivities} 
+        />
+        <ReplyForm 
+          activity={replyActivity} 
+          popped={poppedReply} 
+          setPopped={setPoppedReply} 
+          setActivities={setActivities} 
+          activities={activities} 
+        />
+        <div className='activity_feed'>
+          <div className='activity_feed_heading'>
+            <div className='title'>Home</div>
+          </div>
+          <ActivityFeed 
+            setReplyActivity={setReplyActivity} 
+            setPopped={setPoppedReply} 
+            activities={activities} 
+          />
+        </div>
       </div>
+      <DesktopSidebar user={user} />
     </article>
   );
 }

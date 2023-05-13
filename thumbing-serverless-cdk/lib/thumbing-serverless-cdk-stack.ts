@@ -22,7 +22,7 @@ export class ThumbingServerlessCdkStack extends cdk.Stack {
     const webhookUrl: string = process.env.THUMBING_WEBHOOK_URL as string;
     const topicName: string = process.env.THUMBING_TOPIC_NAME as string;
     const functionPath: string = process.env.THUMBING_FUNCTION_PATH as string;
-    console.log('uploadsBucketName',)
+    console.log('uploadsBucketName',uploadsBucketName)
     console.log('assetsBucketName',assetsBucketName)
     console.log('folderInput',folderInput)
     console.log('folderOutput',folderOutput)
@@ -31,7 +31,7 @@ export class ThumbingServerlessCdkStack extends cdk.Stack {
     console.log('functionPath',functionPath)
 
     const uploadsBucket = this.createBucket(uploadsBucketName);
-    const assetsBucket = this.importBucket(assetsBucketName);
+    const assetsBucket = this.createBucket2(assetsBucketName);
 
     // create a lambda
     const lambda = this.createLambda(
@@ -63,6 +63,14 @@ export class ThumbingServerlessCdkStack extends cdk.Stack {
 
   createBucket(bucketName: string): s3.IBucket {
     const bucket = new s3.Bucket(this, 'UploadsBucket', {
+      bucketName: bucketName,
+      removalPolicy: cdk.RemovalPolicy.DESTROY
+    });
+    return bucket;
+  }
+
+  createBucket2(bucketName: string): s3.IBucket {
+    const bucket = new s3.Bucket(this, 'AssetsBucket', {
       bucketName: bucketName,
       removalPolicy: cdk.RemovalPolicy.DESTROY
     });
