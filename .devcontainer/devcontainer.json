@@ -21,7 +21,7 @@
 			}
 		}
 	},
-	"postCreateCommand": "sudo apt-get update && sudo apt-get -y install postgresql-client session-manager-plugin"
+	"postCreateCommand": "sudo apt-get update && sudo apt-get -y install postgresql-client"
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
